@@ -42,6 +42,20 @@ body {
   color: #2E7D32;
 }
 
+.install-btn {
+  padding: 4px 12px;
+  border: 2px solid #FF9800;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #E65100;
+  cursor: pointer;
+  animation: zukanPop 0.3s ease both;
+}
+.install-btn:active { transform: scale(0.95); }
+
 .lang-btn {
   padding: 4px 12px;
   border: 2px solid #4CAF50;

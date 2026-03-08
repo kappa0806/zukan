@@ -743,6 +743,29 @@ document.addEventListener('DOMContentLoaded', () => {
   showZukanList();
 });
 
+// ===== PWA インストール =====
+let deferredPrompt = null;
+const installBtn = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = '';
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+  installBtn.style.display = 'none';
+  deferredPrompt = null;
+});
+
 // ===== Service Worker 登録 =====
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
