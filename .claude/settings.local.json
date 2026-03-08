@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:aws.amazon.com)",
+      "Bash(python3 -c:*)",
+      "Bash(pip install:*)"
+    ]
+  }
+}
