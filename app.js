@@ -588,29 +588,31 @@ function showZukanList(filterCat, noAnim) {
 
 // ===== 世界地図SVG =====
 function createWorldMap(regions) {
-  const regionPaths = {
-    north_america: 'M30,28 L58,28 L65,45 L55,65 L42,68 L30,55 Z',
-    south_america: 'M55,68 L65,65 L72,85 L62,115 L50,110 L48,85 Z',
-    europe: 'M110,25 L135,22 L140,40 L125,48 L110,42 Z',
-    africa: 'M110,48 L135,45 L145,65 L140,95 L118,100 L105,85 L100,60 Z',
-    asia: 'M140,18 L195,20 L200,55 L180,65 L155,60 L135,50 L135,25 Z',
-    japan: 'M192,38 L196,36 L198,42 L194,46 L190,42 Z',
-    oceania: 'M175,80 L200,75 L210,90 L200,105 L180,100 L172,90 Z',
-    arctic: 'M20,5 L210,5 L210,18 L20,18 Z',
-    antarctic: 'M40,118 L180,118 L180,130 L40,130 Z',
-    ocean: 'M0,0 L220,0 L220,130 L0,130 Z',
-    worldwide: 'M0,0 L220,0 L220,130 L0,130 Z',
-  };
+  // worldmap.png (700x490) の上にハイライト楕円を重ねる
+  const highlights = [
+    { keys: ['europe'],        cx: 155, cy: 140, rx: 55, ry: 50 },
+    { keys: ['africa'],        cx: 155, cy: 310, rx: 60, ry: 100 },
+    { keys: ['asia'],          cx: 330, cy: 160, rx: 135, ry: 100 },
+    { keys: ['japan', 'asia'], cx: 415, cy: 155, rx: 20, ry: 40 },
+    { keys: ['oceania'],       cx: 415, cy: 370, rx: 70, ry: 50 },
+    { keys: ['north_america'], cx: 585, cy: 150, rx: 80, ry: 100 },
+    { keys: ['south_america'], cx: 600, cy: 350, rx: 45, ry: 90 },
+    { keys: ['arctic'],        cx: 350, cy: 25,  rx: 300, ry: 30 },
+    { keys: ['antarctic'],     cx: 350, cy: 475, rx: 300, ry: 20 },
+  ];
+
   const isAll = regions.includes('worldwide');
   const isOcean = regions.includes('ocean');
-  let paths = '';
-  for (const [key, d] of Object.entries(regionPaths)) {
-    if (key === 'ocean' || key === 'worldwide') continue;
-    const active = isAll || regions.includes(key);
-    paths += `<path d="${d}" fill="${active ? '#FF7043' : '#C8E6C9'}" stroke="#fff" stroke-width="1" opacity="${active ? '0.85' : '0.5'}"/>`;
+  const border = (isOcean || isAll) ? 'border:2px solid #42A5F5;' : '';
+
+  let overlays = '';
+  for (const h of highlights) {
+    const active = isAll || h.keys.some(k => regions.includes(k));
+    if (!active) continue;
+    overlays += `<ellipse cx="${h.cx}" cy="${h.cy}" rx="${h.rx}" ry="${h.ry}" fill="#FF7043" opacity="0.35"/>`;
   }
-  const oceanFill = (isOcean || isAll) ? '#BBDEFB' : '#E3F2FD';
-  return `<svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;border-radius:10px;background:${oceanFill};">${paths}</svg>`;
+
+  return `<div style="position:relative;width:100%;max-width:380px;${border}border-radius:10px;overflow:hidden;"><img src="${IMG_BASE}images/worldmap.png" alt="world map" style="width:100%;display:block;" draggable="false"><svg viewBox="0 0 700 490" style="position:absolute;top:0;left:0;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">${overlays}</svg></div>`;
 }
 
 function openZukanOverlay(titleText, contentBuilder) {
@@ -709,14 +711,12 @@ function showZukanDetail(item, animDir) {
   const main = document.createElement('div');
   main.className = 'zukan-detail-main';
   const habitat = HABITATS[item.name];
-  const habitatText = habitat ? (getLang() === 'en' ? habitat.en : habitat.ja) : '';
   main.innerHTML = `
     <img src="${item.img}" alt="${itemName(item)}" draggable="false" class="zukan-detail-img">
     <div class="zukan-detail-info">
       <div class="zukan-detail-name">${itemName(item)}<span class="zukan-detail-cat">${catNameStr}</span></div>
       <div class="zukan-detail-desc">${itemDesc(item)}</div>
       ${triviaText ? `<div class="zukan-trivia"><span class="zukan-trivia-label">${t('まめちしき', 'Fun Fact')}</span>${triviaText}</div>` : ''}
-      ${habitat ? `<div class="zukan-habitat"><span class="zukan-habitat-label">${t('すんでいるところ', 'Habitat')}</span><span class="zukan-habitat-text">${habitatText}</span>${createWorldMap(habitat.regions)}</div>` : ''}
     </div>
   `;
   main.querySelector('.zukan-detail-img').addEventListener('click', function() {
@@ -744,57 +744,81 @@ function showZukanDetail(item, animDir) {
   });
   actions.appendChild(backBtn);
 
-  if (hasVarieties) {
-    const varPreview = document.createElement('button');
-    varPreview.className = 'zukan-varieties-preview';
-    varPreview.addEventListener('click', () => {
+  // しゅるい＆すんでいるところボタン（1つのオーバーレイにまとめる）
+  if (hasVarieties || habitat) {
+    const infoBtn = document.createElement('button');
+    infoBtn.className = 'zukan-varieties-preview';
+    infoBtn.addEventListener('click', () => {
       const title = getLang() === 'en'
-        ? `Types of ${itemName(item)}`
-        : `${item.name} の しゅるい`;
+        ? `About ${itemName(item)}`
+        : `${item.name} の くわしく`;
       openZukanOverlay(title, (body) => {
-        const grid = document.createElement('div');
-        grid.className = 'overlay-variety-grid';
-        varieties.forEach((v, i) => {
-          const card = document.createElement('div');
-          card.className = 'overlay-variety-card zukan-anim-pop';
-          card.style.animationDelay = `${i * 60}ms`;
-          const vName = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
-          const vDesc = (getLang() === 'en' && v.descEn) ? v.descEn : v.desc;
-          card.innerHTML = `${v.img ? `<img src="${v.img}" alt="${vName}" draggable="false" class="variety-img">` : ''}<div class="overlay-variety-name">${vName}</div><div class="overlay-variety-desc">${vDesc}</div>`;
-          if (v.img) {
-            card.querySelector('.variety-img').addEventListener('click', (e) => {
-              e.stopPropagation();
-              const zoom = document.createElement('div');
-              zoom.className = 'image-zoom-overlay';
-              zoom.innerHTML = `<img src="${v.img}" alt="${vName}" draggable="false">`;
-              zoom.addEventListener('click', () => zoom.remove());
-              document.body.appendChild(zoom);
-            });
-          }
-          grid.appendChild(card);
-        });
-        body.appendChild(grid);
+        // 品種セクション
+        if (hasVarieties) {
+          const varSection = document.createElement('div');
+          varSection.innerHTML = `<div style="font-size:1em;font-weight:bold;color:#E65100;margin-bottom:8px;">📋 ${t('しゅるい', 'Types')} (${varieties.length})</div>`;
+          const grid = document.createElement('div');
+          grid.className = 'overlay-variety-grid';
+          varieties.forEach((v, i) => {
+            const card = document.createElement('div');
+            card.className = 'overlay-variety-card zukan-anim-pop';
+            card.style.animationDelay = `${i * 60}ms`;
+            const vName = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
+            const vDesc = (getLang() === 'en' && v.descEn) ? v.descEn : v.desc;
+            card.innerHTML = `${v.img ? `<img src="${v.img}" alt="${vName}" draggable="false" class="variety-img">` : ''}<div class="overlay-variety-name">${vName}</div><div class="overlay-variety-desc">${vDesc}</div>`;
+            if (v.img) {
+              card.querySelector('.variety-img').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const zoom = document.createElement('div');
+                zoom.className = 'image-zoom-overlay';
+                zoom.innerHTML = `<img src="${v.img}" alt="${vName}" draggable="false">`;
+                zoom.addEventListener('click', () => zoom.remove());
+                document.body.appendChild(zoom);
+              });
+            }
+            grid.appendChild(card);
+          });
+          varSection.appendChild(grid);
+          body.appendChild(varSection);
+        }
+        // 生息地セクション（下部）
+        if (habitat) {
+          const habitatText = getLang() === 'en' ? habitat.en : habitat.ja;
+          const habitatSection = document.createElement('div');
+          habitatSection.style.cssText = 'text-align:center;' + (hasVarieties ? 'margin-top:16px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.08);' : '');
+          habitatSection.innerHTML = `
+            <div style="font-size:1em;font-weight:bold;color:#43A047;margin-bottom:8px;">🌍 ${t('すんでいるところ', 'Habitat')}</div>
+            ${createWorldMap(habitat.regions)}
+            <div style="margin-top:8px;font-size:1em;font-weight:bold;color:#2E7D32;">${habitatText}</div>
+          `;
+          body.appendChild(habitatSection);
+        }
       });
     });
+    // ボタンのラベル
     const previewLabel = document.createElement('span');
     previewLabel.className = 'varieties-preview-label';
-    previewLabel.textContent = getLang() === 'en'
-      ? `Types (${varieties.length})`
-      : `しゅるい (${varieties.length})`;
-    varPreview.appendChild(previewLabel);
-    const previewImgs = document.createElement('span');
-    previewImgs.className = 'varieties-preview-imgs';
-    varieties.slice(0, 4).forEach(v => {
-      if (v.img) {
-        const img = document.createElement('img');
-        img.src = v.img;
-        img.alt = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
-        img.draggable = false;
-        previewImgs.appendChild(img);
-      }
-    });
-    varPreview.appendChild(previewImgs);
-    actions.appendChild(varPreview);
+    const parts = [];
+    if (hasVarieties) parts.push(getLang() === 'en' ? `Types (${varieties.length})` : `しゅるい (${varieties.length})`);
+    if (habitat) parts.push(getLang() === 'en' ? 'Habitat' : 'すんでいるところ');
+    previewLabel.textContent = parts.join(' / ');
+    infoBtn.appendChild(previewLabel);
+    // サムネイル（品種がある場合）
+    if (hasVarieties) {
+      const previewImgs = document.createElement('span');
+      previewImgs.className = 'varieties-preview-imgs';
+      varieties.slice(0, 4).forEach(v => {
+        if (v.img) {
+          const img = document.createElement('img');
+          img.src = v.img;
+          img.alt = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
+          img.draggable = false;
+          previewImgs.appendChild(img);
+        }
+      });
+      infoBtn.appendChild(previewImgs);
+    }
+    actions.appendChild(infoBtn);
   }
 
   // なかまボタン

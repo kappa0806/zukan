@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zukan-pwa-v11';
+const CACHE_NAME = 'zukan-pwa-v12';
 
 // 自身のファイル
 const APP_FILES = [
@@ -7,6 +7,7 @@ const APP_FILES = [
   './style.css',
   './app.js',
   './manifest.json',
+  './images/worldmap.png',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',

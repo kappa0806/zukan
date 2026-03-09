@@ -404,6 +404,10 @@ body {
   background: linear-gradient(135deg, #FFE0B2, #FFCC80);
   color: #E65100;
 }
+.zukan-action-btn.habitat {
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  color: #2E7D32;
+}
 .zukan-action-btn.nakama {
   background: linear-gradient(135deg, #C8E6C9, #A5D6A7);
   color: #1B5E20;

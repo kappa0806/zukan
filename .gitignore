@@ -2,3 +2,5 @@ node_modules/
 test-results/
 tests/screenshots/
 *.png
+!images/worldmap.png
+!icons/*.png
