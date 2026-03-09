@@ -520,6 +520,56 @@ body {
   }
 }
 
+/* ===== 横画面の詳細ビュー最適化 ===== */
+@media (orientation: landscape) {
+  .zukan-detail-main {
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .zukan-detail-img {
+    width: 40vw;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+
+  .zukan-detail-info {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .zukan-detail-name {
+    font-size: 2.2em;
+  }
+
+  .zukan-detail-desc {
+    font-size: 1.15em;
+    line-height: 1.5;
+  }
+
+  .zukan-trivia {
+    font-size: 1.05em;
+    line-height: 1.5;
+    padding: 8px 12px;
+  }
+
+  .zukan-detail-actions {
+    gap: 12px;
+  }
+
+  .zukan-action-btn {
+    padding: 10px 20px;
+    font-size: 1.05em;
+  }
+
+  .zukan-nav-btn {
+    font-size: 0.9em;
+    padding: 8px 14px;
+  }
+}
+
 /* ===== 小さい画面 ===== */
 @media (max-height: 500px) {
   .zukan-detail-img {
