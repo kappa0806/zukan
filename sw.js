@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zukan-pwa-v4';
+const CACHE_NAME = 'zukan-pwa-v5';
 
 // 自身のファイル
 const APP_FILES = [
