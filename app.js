@@ -897,32 +897,25 @@ function showZukanDetail(item, animDir) {
     actions.appendChild(infoBtn);
   }
 
-  container.appendChild(actions);
-
-  // 前後ナビ
+  // 前後ナビボタン（アクション行に配置）
   if (allFiltered.length > 1) {
-    const nav = document.createElement('div');
-    nav.className = 'zukan-detail-nav';
     if (currentIdx > 0) {
       const prevBtn = document.createElement('button');
-      prevBtn.className = 'zukan-nav-btn prev';
+      prevBtn.className = 'zukan-action-btn back';
       prevBtn.textContent = `◀ ${itemName(allFiltered[currentIdx - 1])}`;
       prevBtn.addEventListener('click', () => showZukanDetail(allFiltered[currentIdx - 1], 'left'));
-      nav.appendChild(prevBtn);
+      actions.appendChild(prevBtn);
     }
-    const counter = document.createElement('span');
-    counter.className = 'zukan-nav-counter';
-    counter.textContent = `${currentIdx + 1} / ${allFiltered.length}`;
-    nav.appendChild(counter);
     if (currentIdx < allFiltered.length - 1) {
       const nextBtn = document.createElement('button');
-      nextBtn.className = 'zukan-nav-btn next';
+      nextBtn.className = 'zukan-action-btn back';
       nextBtn.textContent = `${itemName(allFiltered[currentIdx + 1])} ▶`;
       nextBtn.addEventListener('click', () => showZukanDetail(allFiltered[currentIdx + 1], 'right'));
-      nav.appendChild(nextBtn);
+      actions.appendChild(nextBtn);
     }
-    container.appendChild(nav);
   }
+
+  container.appendChild(actions);
 }
 
 // ===== 言語切替 =====

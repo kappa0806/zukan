@@ -344,36 +344,6 @@ body {
   cursor: pointer;
 }
 
-/* ===== 前後ナビ ===== */
-.zukan-detail-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 0;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.zukan-nav-btn {
-  border: none;
-  background: rgba(76, 175, 80, 0.12);
-  color: #2E7D32;
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 45%;
-}
-.zukan-nav-btn:active { transform: scale(0.95); }
-.zukan-nav-counter {
-  font-size: 0.75em;
-  color: #888;
-  flex-shrink: 0;
-}
 
 /* ===== アクションボタン行 ===== */
 .zukan-detail-actions {
@@ -381,6 +351,7 @@ body {
   gap: 8px;
   flex-shrink: 0;
   padding: 6px 0;
+  flex-wrap: wrap;
 }
 
 .zukan-action-btn {
@@ -701,12 +672,4 @@ body {
     font-size: 1em;
   }
 
-  .zukan-nav-btn {
-    font-size: 0.9em;
-    padding: 6px 14px;
-  }
-
-  .zukan-nav-counter {
-    font-size: 0.85em;
-  }
 }
