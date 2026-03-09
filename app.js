@@ -681,8 +681,10 @@ function openImageZoom(images, startIdx) {
   }
 
   // スワイプで切り替え
+  let swiped = false;
   let touchStartX = 0, touchStartY = 0;
   overlay.addEventListener('touchstart', (e) => {
+    swiped = false;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
@@ -690,6 +692,7 @@ function openImageZoom(images, startIdx) {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
     if (images.length > 1 && Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) {
+      swiped = true;
       if (dx < 0) {
         currentIdx = (currentIdx + 1) % images.length;
       } else {
@@ -699,12 +702,16 @@ function openImageZoom(images, startIdx) {
       img.offsetHeight;
       img.style.animation = dx < 0 ? 'imgSwipeLeft 0.25s ease' : 'imgSwipeRight 0.25s ease';
       updateZoomImg();
-      return;
     }
-    // スワイプでなければタップで閉じる
-    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+  });
+
+  // clickで閉じる（タップ貫通を防止）
+  overlay.addEventListener('click', (e) => {
+    if (!swiped) {
+      e.stopPropagation();
       overlay.remove();
     }
+    swiped = false;
   });
 
   document.body.appendChild(overlay);
