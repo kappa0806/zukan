@@ -496,10 +496,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  transition: transform 0.15s;
 }
-.overlay-variety-card:active { transform: scale(0.96); }
 .variety-img {
   width: 100%;
   max-width: 160px;

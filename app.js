@@ -835,12 +835,11 @@ function showZukanDetail(item, animDir) {
             const vName = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
             const vDesc = (getLang() === 'en' && v.descEn) ? v.descEn : v.desc;
             card.innerHTML = `${v.img ? `<img src="${v.img}" alt="${vName}" draggable="false" class="variety-img">` : ''}<div class="overlay-variety-name">${vName}</div><div class="overlay-variety-desc">${vDesc}</div>`;
-            // カード全体をタップで画像拡大（スワイプ切り替え付き）
+            // 画像タップのみ拡大（スワイプ切り替え付き）
             if (v.img) {
               const allVarImgs = varieties.filter(vv => vv.img).map(vv => vv.img);
               const imgIdx = allVarImgs.indexOf(v.img);
-              card.style.cursor = 'pointer';
-              card.addEventListener('click', (e) => {
+              card.querySelector('.variety-img').addEventListener('click', (e) => {
                 e.stopPropagation();
                 openImageZoom(allVarImgs, imgIdx >= 0 ? imgIdx : 0);
               });
