@@ -59,6 +59,7 @@ const CREATURES = {
     { img: 'images/swan.jpg', name: 'はくちょう', nameEn: 'Swan', counter: 'わ', desc: 'しろくて うつくしい おおきな とり。みずうみで ゆうがに およぐ すがたが すてきだね。', descEn: 'A beautiful big white bird that swims gracefully on lakes.', trivia: 'じつは とぶと じそく 100キロ いじょう でるんだよ！みかけに よらず すごい。', triviaEn: 'They can fly over 100 km/h! Way faster than they look.' },
     { img: 'images/rhino.jpg', name: 'さい', nameEn: 'Rhino', counter: 'とう', desc: 'おおきな つのと あつい ひふが とくちょう。アフリカや アジアに すんでいるよ。', descEn: 'Known for their big horn and thick skin. They live in Africa and Asia.', trivia: 'つのは かみのけと おなじ せいぶん でできているんだよ！かたいけど ほねじゃ ないんだ。', triviaEn: 'Their horn is made of the same stuff as human hair! It\'s hard but not bone.' },
     { img: 'images/zebra.jpg', name: 'しまうま', nameEn: 'Zebra', counter: 'とう', desc: 'しろと くろの しまもようが おしゃれ！アフリカの くさはらを むれで はしるよ。', descEn: 'Stylish black and white stripes! Zebras run in herds across African grasslands.', trivia: 'しまもようは 1とうずつ ちがうんだよ。にんげんの しもんと おなじだね！', triviaEn: 'Each zebra\'s stripe pattern is unique - just like human fingerprints!' },
+    { img: 'images/snake.jpg', name: 'へび', nameEn: 'Snake', counter: 'ひき', desc: 'ながい からだで するする すすむよ。あしが ないのに とっても はやい！したを ぺろぺろ だして まわりを しらべるんだ。', descEn: 'Slithers along with a long body. Super fast without any legs! Flicks its tongue to sense its surroundings.', trivia: 'したを ぺろぺろ するのは においを かいでいるんだよ！したで くうきの においが わかるんだ。', triviaEn: 'When they flick their tongue, they\'re actually smelling the air! Their tongue picks up scent particles.' },
   ],
   bugs: [
     { img: 'images/butterfly.jpg', name: 'ちょうちょ', nameEn: 'Butterfly', counter: 'ひき', desc: 'きれいな はねで ひらひら とぶよ。おはなの みつを すうんだ。あおむしから へんしん するよ！', descEn: 'Flutters around with beautiful wings. They drink flower nectar and transform from caterpillars!', trivia: 'あじは あしで わかるんだよ！おはなに とまるだけで あまいか わかっちゃう。', triviaEn: 'They taste with their feet! Just by landing on a flower they can tell if it\'s sweet.' },
@@ -448,6 +449,11 @@ const VARIETIES_RAW = {
     { img: 'images/varieties/woodlouse.jpg', name: 'ワラジムシ', nameEn: 'Woodlouse', desc: 'ダンゴムシに にてるけど まるまれない。ひらたい からだだよ。', descEn: 'Looks like a pill bug but can\'t roll up. Flat body.' },
     { img: 'images/varieties/giant_isopod.jpg', name: 'ダイオウグソクムシ', nameEn: 'Giant Isopod', desc: 'ふかい うみの おおきな ダンゴムシ！45センチにも なるよ。', descEn: 'A giant deep-sea pill bug! Can reach 45cm!' },
   ],
+  'へび': [
+    { img: 'images/varieties/king_cobra.jpg', name: 'キングコブラ', nameEn: 'King Cobra', desc: 'せかいで いちばん ながい どくへび。くびを ひろげて いかく するよ。', descEn: 'The world\'s longest venomous snake. Spreads its hood to intimidate!' },
+    { img: 'images/varieties/ball_python.jpg', name: 'ボールニシキヘビ', nameEn: 'Ball Python', desc: 'まるくなるのが とくい！おとなしくて ペットとしても にんき。', descEn: 'Curls into a ball when scared! Gentle and popular as pets.' },
+    { img: 'images/varieties/green_tree_snake.jpg', name: 'ミドリニシキヘビ', nameEn: 'Green Tree Python', desc: 'みどりいろで きの えだに まきつくよ。とても きれいな へび。', descEn: 'Bright green and wraps around tree branches. A very beautiful snake.' },
+  ],
 };
 
 const VARIETIES = {};
@@ -457,6 +463,79 @@ Object.keys(VARIETIES_RAW).forEach(key => {
     img: v.img ? IMG_BASE + v.img : undefined
   }));
 });
+
+// ===== 生息地データ =====
+const HABITATS = {
+  'いぬ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'ねこ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'うさぎ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'くま': { regions: ['north_america', 'europe', 'asia'], ja: 'きたアメリカ・ヨーロッパ・アジア', en: 'North America, Europe & Asia' },
+  'ぞう': { regions: ['africa', 'asia'], ja: 'アフリカ・アジア', en: 'Africa & Asia' },
+  'らいおん': { regions: ['africa', 'asia'], ja: 'アフリカ・インド', en: 'Africa & India' },
+  'さる': { regions: ['asia', 'africa', 'south_america'], ja: 'アジア・アフリカ・みなみアメリカ', en: 'Asia, Africa & South America' },
+  'きりん': { regions: ['africa'], ja: 'アフリカ', en: 'Africa' },
+  'ぶた': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'うし': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'うま': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'ひつじ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'にわとり': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'きつね': { regions: ['north_america', 'europe', 'asia', 'africa'], ja: 'きたアメリカ・ヨーロッパ・アジア・アフリカ', en: 'N. America, Europe, Asia & Africa' },
+  'ぱんだ': { regions: ['asia'], ja: 'ちゅうごくの やま', en: 'Mountains of China' },
+  'ぺんぎん': { regions: ['antarctic', 'south_america', 'oceania'], ja: 'なんきょく・みなみアメリカ・オセアニア', en: 'Antarctic, S. America & Oceania' },
+  'かに': { regions: ['worldwide', 'ocean'], ja: 'せかいの うみや かわ', en: 'Oceans & rivers worldwide' },
+  'こあら': { regions: ['oceania'], ja: 'オーストラリア', en: 'Australia' },
+  'ごりら': { regions: ['africa'], ja: 'アフリカの もり', en: 'Forests of Africa' },
+  'かば': { regions: ['africa'], ja: 'アフリカの かわや みずうみ', en: 'Rivers & lakes of Africa' },
+  'とら': { regions: ['asia'], ja: 'アジア', en: 'Asia' },
+  'しか': { regions: ['north_america', 'europe', 'asia', 'japan'], ja: 'きたアメリカ・ヨーロッパ・アジア・にほん', en: 'N. America, Europe, Asia & Japan' },
+  'たぬき': { regions: ['asia', 'japan'], ja: 'にほん・ひがしアジア', en: 'Japan & East Asia' },
+  'おおかみ': { regions: ['north_america', 'europe', 'asia'], ja: 'きたアメリカ・ヨーロッパ・アジア', en: 'North America, Europe & Asia' },
+  'らくだ': { regions: ['africa', 'asia'], ja: 'アフリカ・アジアの さばく', en: 'Deserts of Africa & Asia' },
+  'かんがるー': { regions: ['oceania'], ja: 'オーストラリア', en: 'Australia' },
+  'はむすたー': { regions: ['europe', 'asia'], ja: 'ヨーロッパ・アジア', en: 'Europe & Asia' },
+  'りす': { regions: ['north_america', 'europe', 'asia'], ja: 'きたアメリカ・ヨーロッパ・アジア', en: 'North America, Europe & Asia' },
+  'ふくろう': { regions: ['worldwide'], ja: 'なんきょく いがいの せかいじゅう', en: 'Worldwide except Antarctica' },
+  'いんこ': { regions: ['south_america', 'oceania', 'africa', 'asia'], ja: 'みなみアメリカ・オセアニア・アフリカ・アジア', en: 'S. America, Oceania, Africa & Asia' },
+  'ふらみんご': { regions: ['africa', 'south_america', 'europe', 'asia'], ja: 'アフリカ・みなみアメリカ・みなみヨーロッパ', en: 'Africa, S. America & S. Europe' },
+  'はくちょう': { regions: ['north_america', 'europe', 'asia'], ja: 'きたアメリカ・ヨーロッパ・アジア', en: 'North America, Europe & Asia' },
+  'さい': { regions: ['africa', 'asia'], ja: 'アフリカ・みなみアジア', en: 'Africa & South Asia' },
+  'しまうま': { regions: ['africa'], ja: 'アフリカの くさはら', en: 'African grasslands' },
+  'へび': { regions: ['worldwide'], ja: 'なんきょく いがいの せかいじゅう', en: 'Worldwide except Antarctica' },
+  'ちょうちょ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'あおむし': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'てんとうむし': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'あり': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'ばった': { regions: ['worldwide'], ja: 'せかいじゅうの くさはら', en: 'Grasslands worldwide' },
+  'かぶとむし': { regions: ['asia', 'japan'], ja: 'にほん・アジア', en: 'Japan & Asia' },
+  'はち': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'かたつむり': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'とんぼ': { regions: ['worldwide'], ja: 'せかいじゅうの みずべ', en: 'Near water worldwide' },
+  'せみ': { regions: ['worldwide'], ja: 'あたたかい ちいき', en: 'Warm regions worldwide' },
+  'ほたる': { regions: ['worldwide'], ja: 'きれいな みずが ある あたたかい ちいき', en: 'Warm areas with clean water' },
+  'くわがたむし': { regions: ['worldwide'], ja: 'せかいじゅうの もり', en: 'Forests worldwide' },
+  'かまきり': { regions: ['worldwide'], ja: 'あたたかい ちいき', en: 'Warm regions worldwide' },
+  'くも': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'こおろぎ': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'だんごむし': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'さかな': { regions: ['worldwide', 'ocean'], ja: 'せかいじゅうの うみや かわ', en: 'Oceans & rivers worldwide' },
+  'ねったいぎょ': { regions: ['ocean'], ja: 'あたたかい うみの サンゴしょう', en: 'Coral reefs in warm seas' },
+  'ふぐ': { regions: ['ocean', 'asia'], ja: 'あたたかい うみ', en: 'Warm seas' },
+  'さめ': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'たこ': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'いか': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'えび': { regions: ['ocean'], ja: 'せかいじゅうの うみや かわ', en: 'Oceans & rivers worldwide' },
+  'くじら': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'いるか': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'かめ': { regions: ['worldwide', 'ocean'], ja: 'せかいじゅうの りく・うみ・かわ', en: 'Land, sea & rivers worldwide' },
+  'かえる': { regions: ['worldwide'], ja: 'せかいじゅう', en: 'Worldwide' },
+  'くらげ': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'たつのおとしご': { regions: ['ocean'], ja: 'あたたかい うみの あさい ところ', en: 'Shallow warm seas' },
+  'ひとで': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'あざらし': { regions: ['arctic', 'antarctic', 'ocean'], ja: 'きたと みなみの つめたい うみ', en: 'Cold seas of Arctic & Antarctic' },
+  'らっこ': { regions: ['north_america', 'ocean'], ja: 'きたたいへいようの うみ', en: 'North Pacific Ocean' },
+  'えい': { regions: ['ocean'], ja: 'せかいじゅうの うみ', en: 'Oceans worldwide' },
+  'うに': { regions: ['ocean'], ja: 'せかいじゅうの うみの そこ', en: 'Ocean floors worldwide' },
+};
 
 function catName(key) {
   const map = {
@@ -505,6 +584,33 @@ function showZukanList(filterCat, noAnim) {
     });
   });
   container.appendChild(grid);
+}
+
+// ===== 世界地図SVG =====
+function createWorldMap(regions) {
+  const regionPaths = {
+    north_america: 'M30,28 L58,28 L65,45 L55,65 L42,68 L30,55 Z',
+    south_america: 'M55,68 L65,65 L72,85 L62,115 L50,110 L48,85 Z',
+    europe: 'M110,25 L135,22 L140,40 L125,48 L110,42 Z',
+    africa: 'M110,48 L135,45 L145,65 L140,95 L118,100 L105,85 L100,60 Z',
+    asia: 'M140,18 L195,20 L200,55 L180,65 L155,60 L135,50 L135,25 Z',
+    japan: 'M192,38 L196,36 L198,42 L194,46 L190,42 Z',
+    oceania: 'M175,80 L200,75 L210,90 L200,105 L180,100 L172,90 Z',
+    arctic: 'M20,5 L210,5 L210,18 L20,18 Z',
+    antarctic: 'M40,118 L180,118 L180,130 L40,130 Z',
+    ocean: 'M0,0 L220,0 L220,130 L0,130 Z',
+    worldwide: 'M0,0 L220,0 L220,130 L0,130 Z',
+  };
+  const isAll = regions.includes('worldwide');
+  const isOcean = regions.includes('ocean');
+  let paths = '';
+  for (const [key, d] of Object.entries(regionPaths)) {
+    if (key === 'ocean' || key === 'worldwide') continue;
+    const active = isAll || regions.includes(key);
+    paths += `<path d="${d}" fill="${active ? '#FF7043' : '#C8E6C9'}" stroke="#fff" stroke-width="1" opacity="${active ? '0.85' : '0.5'}"/>`;
+  }
+  const oceanFill = (isOcean || isAll) ? '#BBDEFB' : '#E3F2FD';
+  return `<svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;border-radius:10px;background:${oceanFill};">${paths}</svg>`;
 }
 
 function openZukanOverlay(titleText, contentBuilder) {
@@ -602,12 +708,15 @@ function showZukanDetail(item, animDir) {
 
   const main = document.createElement('div');
   main.className = 'zukan-detail-main';
+  const habitat = HABITATS[item.name];
+  const habitatText = habitat ? (getLang() === 'en' ? habitat.en : habitat.ja) : '';
   main.innerHTML = `
     <img src="${item.img}" alt="${itemName(item)}" draggable="false" class="zukan-detail-img">
     <div class="zukan-detail-info">
       <div class="zukan-detail-name">${itemName(item)}<span class="zukan-detail-cat">${catNameStr}</span></div>
       <div class="zukan-detail-desc">${itemDesc(item)}</div>
       ${triviaText ? `<div class="zukan-trivia"><span class="zukan-trivia-label">${t('まめちしき', 'Fun Fact')}</span>${triviaText}</div>` : ''}
+      ${habitat ? `<div class="zukan-habitat"><span class="zukan-habitat-label">${t('すんでいるところ', 'Habitat')}</span><span class="zukan-habitat-text">${habitatText}</span>${createWorldMap(habitat.regions)}</div>` : ''}
     </div>
   `;
   main.querySelector('.zukan-detail-img').addEventListener('click', function() {
@@ -636,12 +745,9 @@ function showZukanDetail(item, animDir) {
   actions.appendChild(backBtn);
 
   if (hasVarieties) {
-    const varBtn = document.createElement('button');
-    varBtn.className = 'zukan-action-btn varieties';
-    varBtn.textContent = getLang() === 'en'
-      ? `Types (${varieties.length})`
-      : `しゅるい (${varieties.length})`;
-    varBtn.addEventListener('click', () => {
+    const varPreview = document.createElement('button');
+    varPreview.className = 'zukan-varieties-preview';
+    varPreview.addEventListener('click', () => {
       const title = getLang() === 'en'
         ? `Types of ${itemName(item)}`
         : `${item.name} の しゅるい`;
@@ -655,12 +761,40 @@ function showZukanDetail(item, animDir) {
           const vName = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
           const vDesc = (getLang() === 'en' && v.descEn) ? v.descEn : v.desc;
           card.innerHTML = `${v.img ? `<img src="${v.img}" alt="${vName}" draggable="false" class="variety-img">` : ''}<div class="overlay-variety-name">${vName}</div><div class="overlay-variety-desc">${vDesc}</div>`;
+          if (v.img) {
+            card.querySelector('.variety-img').addEventListener('click', (e) => {
+              e.stopPropagation();
+              const zoom = document.createElement('div');
+              zoom.className = 'image-zoom-overlay';
+              zoom.innerHTML = `<img src="${v.img}" alt="${vName}" draggable="false">`;
+              zoom.addEventListener('click', () => zoom.remove());
+              document.body.appendChild(zoom);
+            });
+          }
           grid.appendChild(card);
         });
         body.appendChild(grid);
       });
     });
-    actions.appendChild(varBtn);
+    const previewLabel = document.createElement('span');
+    previewLabel.className = 'varieties-preview-label';
+    previewLabel.textContent = getLang() === 'en'
+      ? `Types (${varieties.length})`
+      : `しゅるい (${varieties.length})`;
+    varPreview.appendChild(previewLabel);
+    const previewImgs = document.createElement('span');
+    previewImgs.className = 'varieties-preview-imgs';
+    varieties.slice(0, 4).forEach(v => {
+      if (v.img) {
+        const img = document.createElement('img');
+        img.src = v.img;
+        img.alt = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
+        img.draggable = false;
+        previewImgs.appendChild(img);
+      }
+    });
+    varPreview.appendChild(previewImgs);
+    actions.appendChild(varPreview);
   }
 
   // なかまボタン

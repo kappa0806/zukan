@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zukan-pwa-v9';
+const CACHE_NAME = 'zukan-pwa-v11';
 
 // 自身のファイル
 const APP_FILES = [
@@ -18,6 +18,7 @@ const IMAGES = [
   'horse','sheep','chicken','fox','panda','penguin','crab','koala','gorilla',
   'hippo','tiger','deer','raccoon','wolf','camel','kangaroo','hamster','squirrel',
   'owl','parrot','flamingo','swan','rhino','zebra',
+  'snake',
   'butterfly','caterpillar','ladybug','ant','grasshopper','beetle','bee','snail',
   'dragonfly','cicada','firefly','stagbeetle','mantis','spider','cricket','pillbug',
   'fish','tropicalfish','pufferfish','shark','octopus','squid','shrimp','whale',
@@ -66,6 +67,7 @@ const VARIETY_IMAGES = [
   'budgerigar','cockatiel','macaw',
   'white_rhino','black_rhino','indian_rhino',
   'plains_zebra','grevys_zebra','mountain_zebra',
+  'king_cobra','ball_python','green_tree_snake',
   'tuna','sea_bream','salmon',
   'clownfish','angelfish','tang_fish',
   'tiger_puffer','porcupinefish','boxfish',

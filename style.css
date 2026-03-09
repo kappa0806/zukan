@@ -145,9 +145,20 @@ body {
 /* ===== グリッド一覧 ===== */
 .zukan-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding-bottom: 20px;
+}
+
+@media (min-width: 480px) {
+  .zukan-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 700px) {
+  .zukan-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .zukan-item {
@@ -169,8 +180,8 @@ body {
 .zukan-item:active { transform: scale(0.93); box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 
 .zukan-item img {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  aspect-ratio: 1;
   object-fit: contain;
   border-radius: 10px;
   margin-bottom: 4px;
@@ -255,6 +266,82 @@ body {
   font-size: 0.85em;
   font-weight: bold;
   margin-right: 6px;
+}
+
+/* ===== 生息地セクション ===== */
+.zukan-habitat {
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.zukan-habitat-label {
+  display: inline-block;
+  background: #43A047;
+  color: white;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-right: 6px;
+  align-self: flex-start;
+}
+.zukan-habitat-text {
+  font-size: 0.9em;
+  color: #2E7D32;
+  line-height: 1.4;
+}
+.zukan-habitat svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin-top: 4px;
+  align-self: center;
+}
+
+/* ===== 品種プレビューボタン ===== */
+.zukan-varieties-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: 2px solid #FF9800;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  margin-top: 4px;
+}
+.zukan-varieties-preview:active { transform: scale(0.97); }
+.varieties-preview-label {
+  font-size: 1em;
+  font-weight: bold;
+  color: #E65100;
+}
+.varieties-preview-imgs {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.varieties-preview-imgs img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(255,152,0,0.3);
+}
+
+/* 品種画像タップで拡大 */
+.variety-img {
+  cursor: pointer;
 }
 
 /* ===== 前後ナビ ===== */
@@ -513,10 +600,6 @@ body {
     height: 180px;
     max-width: 300px;
     align-self: center;
-  }
-
-  .zukan-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   }
 }
 
