@@ -983,7 +983,7 @@ window.addEventListener('appinstalled', () => {
 // ===== Service Worker 登録 =====
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
       .then((reg) => {
         console.log('SW registered');
         reg.addEventListener('updatefound', () => {
