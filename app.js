@@ -238,18 +238,17 @@ const VARIETIES_RAW = {
   ],
   'ぱんだ': [
     { img: 'images/varieties/giant_panda.jpg', name: 'ジャイアントパンダ', nameEn: 'Giant Panda', desc: 'しろと くろの おおきな パンダ。ささを たべるのが だいすき！', descEn: 'The big black and white panda that loves eating bamboo!' },
-    { img: 'images/varieties/red_panda.jpg', name: 'レッサーパンダ', nameEn: 'Red Panda', desc: 'あかちゃいろの ちいさな パンダ。きの うえが だいすき！', descEn: 'A small reddish-brown panda that loves climbing trees!' },
-    { img: 'images/varieties/baby_panda.jpg', name: 'あかちゃんパンダ', nameEn: 'Baby Panda', desc: 'うまれたときは ピンクいろ！てのひらサイズで とっても ちいさいよ。', descEn: 'Born pink and tiny - fits in the palm of your hand!' },
+    { img: 'images/varieties/qinling_panda.jpg', name: 'チンリンパンダ', nameEn: 'Qinling Panda', desc: 'ちゃいろと しろの めずらしい パンダ！ちゅうごくの しんれいさんみゃくに すんでいるよ。', descEn: 'A rare brown and white panda living in China\'s Qinling Mountains!' },
   ],
   'かに': [
     { img: 'images/varieties/king_crab.jpg', name: 'タラバガニ', nameEn: 'King Crab', desc: 'おおきな あしが おいしい！つめたい うみに すむよ。', descEn: 'Big delicious legs! Lives in cold seas.' },
-    { img: 'images/varieties/hermit_crab.jpg', name: 'ヤドカリ', nameEn: 'Hermit Crab', desc: 'かいがらを おうちにする かに。おおきくなると ひっこし するよ！', descEn: 'Uses shells as homes and moves to bigger ones as it grows!' },
+    { img: 'images/varieties/snow_crab.jpg', name: 'ズワイガニ', nameEn: 'Snow Crab', desc: 'つめたい うみに すむ おいしい かに。あしが ながくて ほそいよ。', descEn: 'A delicious crab from cold seas with long, thin legs!' },
     { img: 'images/varieties/fiddler_crab.jpg', name: 'シオマネキ', nameEn: 'Fiddler Crab', desc: 'かたほうの はさみが とても おおきい！てを ふって ダンスするよ。', descEn: 'One claw is much bigger than the other! Waves it like a dance.' },
   ],
   'こあら': [
     { img: 'images/varieties/queensland_koala.jpg', name: 'キタコアラ', nameEn: 'Northern Koala', desc: 'ちいさめの コアラ。あたたかい ところに すんでいるよ。', descEn: 'A smaller koala living in warmer areas.' },
     { img: 'images/varieties/victoria_koala.jpg', name: 'ミナミコアラ', nameEn: 'Southern Koala', desc: 'おおきくて もこもこ。さむい ところの コアラは けが ふさふさ！', descEn: 'Bigger and fluffier. Koalas in cold areas have thicker fur!' },
-    { img: 'images/varieties/koala_sleeping.jpg', name: 'あかちゃんコアラ', nameEn: 'Baby Koala', desc: 'おかあさんの おなかの ふくろで そだつよ。かわいい！', descEn: 'Grows up in mom\'s pouch on her belly. So cute!' },
+    { img: 'images/varieties/nsw_koala.jpg', name: 'ニューサウスウェールズコアラ', nameEn: 'NSW Koala', desc: 'キタコアラと ミナミコアラの あいだの おおきさ。シドニーの ちかくにも いるよ。', descEn: 'Medium-sized koala found near Sydney and other parts of New South Wales!' },
   ],
   'ごりら': [
     { img: 'images/varieties/western_gorilla.jpg', name: 'ニシゴリラ', nameEn: 'Western Gorilla', desc: 'もりに すむ ゴリラ。くだものが だいすき！', descEn: 'Forest gorilla that loves fruit!' },
@@ -259,7 +258,6 @@ const VARIETIES_RAW = {
   'かば': [
     { img: 'images/varieties/hippo.jpg', name: 'カバ', nameEn: 'Hippopotamus', desc: 'アフリカの かわに すむ おおきな カバ。くちが すごく おおきい！', descEn: 'Big hippo living in African rivers. Huge mouth!' },
     { img: 'images/varieties/pygmy_hippo.jpg', name: 'コビトカバ', nameEn: 'Pygmy Hippo', desc: 'ちいさくて かわいい カバ。もりの なかに すんでいるよ。', descEn: 'A small cute hippo living in forests.' },
-    { img: 'images/varieties/hippo_baby.jpg', name: 'あかちゃんカバ', nameEn: 'Baby Hippo', desc: 'みずの なかで うまれるよ。およぎが とくい！', descEn: 'Born in the water. Great swimmers!' },
   ],
   'しか': [
     { img: 'images/varieties/japanese_deer.jpg', name: 'ニホンジカ', nameEn: 'Sika Deer', desc: 'ならこうえんの おなじみ。おじぎを する かわいい しか！', descEn: 'The familiar deer of Nara Park that bows cutely!' },
@@ -268,8 +266,8 @@ const VARIETIES_RAW = {
   ],
   'たぬき': [
     { img: 'images/varieties/japanese_tanuki.jpg', name: 'ホンドタヌキ', nameEn: 'Japanese Tanuki', desc: 'にほんの もりに すむ タヌキ。むかしばなしに よく でるよ。', descEn: 'Lives in Japanese forests. Often appears in old folk tales!' },
-    { img: 'images/varieties/raccoon.jpg', name: 'アライグマ', nameEn: 'Raccoon', desc: 'たぬきに にているけど べつの なかま。てで ものを あらうよ！', descEn: 'Looks like a tanuki but is different. Washes things with its hands!' },
-    { img: 'images/varieties/badger.jpg', name: 'アナグマ', nameEn: 'Badger', desc: 'あなを ほるのが とくい！よるに かつどう するよ。', descEn: 'Great at digging holes! Active at night.' },
+    { img: 'images/varieties/ezo_tanuki.jpg', name: 'エゾタヌキ', nameEn: 'Ezo Raccoon Dog', desc: 'ほっかいどうに すむ タヌキ。ふゆは もこもこの けで さむさに つよいよ。', descEn: 'Lives in Hokkaido. Its thick winter fur keeps it warm in the cold!' },
+    { img: 'images/varieties/continental_tanuki.jpg', name: 'タイリクタヌキ', nameEn: 'Continental Raccoon Dog', desc: 'アジアや ヨーロッパに すむ タヌキ。にほんの タヌキの とおい しんせき！', descEn: 'Lives in Asia and Europe. A distant relative of the Japanese tanuki!' },
   ],
   'おおかみ': [
     { img: 'images/varieties/gray_wolf.jpg', name: 'ハイイロオオカミ', nameEn: 'Gray Wolf', desc: 'いちばん おおきい オオカミ。むれで ちからを あわせて かりをするよ。', descEn: 'The biggest wolf. Hunts together in packs.' },
@@ -279,7 +277,6 @@ const VARIETIES_RAW = {
   'らくだ': [
     { img: 'images/varieties/dromedary.jpg', name: 'ヒトコブラクダ', nameEn: 'Dromedary', desc: 'コブが ひとつ。さばくで にもつを はこぶよ。', descEn: 'One hump. Carries loads in the desert.' },
     { img: 'images/varieties/bactrian_camel.jpg', name: 'フタコブラクダ', nameEn: 'Bactrian Camel', desc: 'コブが ふたつ。さむい さばくにも つよいよ。', descEn: 'Two humps. Tough even in cold deserts.' },
-    { img: 'images/varieties/baby_camel.jpg', name: 'あかちゃんラクダ', nameEn: 'Baby Camel', desc: 'うまれたときから たってあるけるよ！コブは まだ ちいさいんだ。', descEn: 'Can stand and walk from birth! The hump is still small.' },
   ],
   'かんがるー': [
     { img: 'images/varieties/red_kangaroo.jpg', name: 'アカカンガルー', nameEn: 'Red Kangaroo', desc: 'いちばん おおきい カンガルー。2メートルも ジャンプ するよ！', descEn: 'The biggest kangaroo. Can jump over 2 meters!' },

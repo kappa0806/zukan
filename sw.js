@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zukan-pwa-v7';
+const CACHE_NAME = 'zukan-pwa-v8';
 
 // 自身のファイル
 const APP_FILES = [
@@ -50,15 +50,15 @@ const VARIETY_IMAGES = [
   'thoroughbred','pony','clydesdale',
   'merino_sheep','suffolk_sheep','bighorn_sheep',
   'nagoya_cochin','silkie_chicken','rooster',
-  'giant_panda','red_panda','baby_panda',
-  'king_crab','hermit_crab','fiddler_crab',
-  'queensland_koala','victoria_koala','koala_sleeping',
+  'giant_panda','qinling_panda',
+  'king_crab','snow_crab','fiddler_crab',
+  'queensland_koala','victoria_koala','nsw_koala',
   'western_gorilla','mountain_gorilla','silverback',
-  'hippo','pygmy_hippo','hippo_baby',
+  'hippo','pygmy_hippo',
   'japanese_deer','reindeer','moose',
-  'japanese_tanuki','raccoon','badger',
+  'japanese_tanuki','ezo_tanuki','continental_tanuki',
   'gray_wolf','arctic_wolf','red_wolf',
-  'dromedary','bactrian_camel','baby_camel',
+  'dromedary','bactrian_camel',
   'red_kangaroo','wallaby','tree_kangaroo',
   'golden_hamster','dwarf_hamster','roborovski',
   'japanese_squirrel','chipmunk','flying_squirrel',
