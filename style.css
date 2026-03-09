@@ -373,6 +373,8 @@ body {
 .zukan-action-btn.back {
   background: rgba(255,255,255,0.9);
   color: #555;
+  padding: 6px 12px;
+  font-size: 0.85em;
 }
 .zukan-action-btn.varieties {
   background: linear-gradient(135deg, #FFE0B2, #FFCC80);
