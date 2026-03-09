@@ -539,11 +539,22 @@ function openZukanOverlay(titleText, contentBuilder) {
   }
 }
 
+let zukanNavigating = false;
+
 function showZukanDetail(item, animDir) {
+  if (zukanNavigating) return;
+  zukanNavigating = true;
+
   const container = document.getElementById('zukan-content');
   container.innerHTML = '';
   const animClass = animDir === 'left' ? 'zukan-anim-slidein-left' : 'zukan-anim-slidein';
   container.className = 'zukan-detail-view ' + animClass;
+
+  // アニメーション完了後にロック解除
+  const unlock = () => { zukanNavigating = false; };
+  container.addEventListener('animationend', unlock, { once: true });
+  // フォールバック（アニメーションが発火しない場合）
+  setTimeout(unlock, 400);
 
   const filteredCats = zukanCurrentFilter ? [zukanCurrentFilter] : CATEGORIES;
   const allFiltered = [];
