@@ -400,8 +400,8 @@ const VARIETIES_RAW = {
   ],
   'ばった': [
     { img: 'images/varieties/grasshopper.jpg', name: 'トノサマバッタ', nameEn: 'Grasshopper', desc: 'おおきくて みどりいろの バッタ。すごく とおくまで とべるよ！', descEn: 'A big green grasshopper that can jump really far!' },
-    { img: 'images/varieties/locust.jpg', name: 'イナゴ', nameEn: 'Locust', desc: 'たんぼに いる バッタ。おおむかしから にほんで たべられているよ。', descEn: 'Found in rice fields. Eaten in Japan since ancient times.' },
-    { img: 'images/varieties/katydid.jpg', name: 'キリギリス', nameEn: 'Katydid', desc: 'きれいな こえで なく バッタの なかま。ぎーぎー って なくよ。', descEn: 'A cricket relative with a beautiful chirp.' },
+    { img: 'images/varieties/locust.jpg', name: 'イナゴ', nameEn: 'Rice Locust', desc: 'たんぼに いる バッタ。おおむかしから にほんで たべられているよ。', descEn: 'Found in rice fields. Eaten in Japan since ancient times.' },
+    { img: 'images/varieties/katydid.jpg', name: 'キリギリス', nameEn: 'Long-horned Grasshopper', desc: 'きれいな こえで なく バッタの なかま。ぎーぎー って なくよ。', descEn: 'A cricket relative with a beautiful chirp.' },
   ],
   'はち': [
     { img: 'images/varieties/honeybee.jpg', name: 'ミツバチ', nameEn: 'Honeybee', desc: 'はちみつを つくる はたらきもの！はなの みつを あつめるよ。', descEn: 'Hard workers that make honey! Collect nectar from flowers.' },
@@ -420,13 +420,13 @@ const VARIETIES_RAW = {
   ],
   'せみ': [
     { img: 'images/varieties/cicada_brown.jpg', name: 'アブラゼミ', nameEn: 'Large Brown Cicada', desc: 'にほんの なつの だいひょう！ジージー って おおきな こえ。', descEn: 'Japan\'s summer icon! Makes a loud buzzing sound.' },
-    { img: 'images/varieties/periodical_cicada.jpg', name: 'ツクツクボウシ', nameEn: 'Evening Cicada', desc: 'なつの おわりに なく セミ。「ツクツクボーシ」って きこえるよ。', descEn: 'Chirps at summer\'s end. Sounds like "tsukutsuku-boshi"!' },
+    { img: 'images/varieties/periodical_cicada.jpg', name: 'ツクツクボウシ', nameEn: 'Japanese Evening Cicada', desc: 'なつの おわりに なく セミ。「ツクツクボーシ」って きこえるよ。', descEn: 'Chirps at summer\'s end. Sounds like "tsukutsuku-boshi"!' },
     { img: 'images/varieties/green_cicada.jpg', name: 'ミンミンゼミ', nameEn: 'Robust Cicada', desc: 'みどりいろの きれいな セミ。「ミーンミン」って なくよ。', descEn: 'A beautiful green cicada. Calls "meen-min"!' },
   ],
   'ほたる': [
     { img: 'images/varieties/japanese_firefly.jpg', name: 'ゲンジボタル', nameEn: 'Genji Firefly', desc: 'いちばん おおきい にほんの ホタル。きれいな みずの かわに いるよ。', descEn: 'Japan\'s biggest firefly. Found in clean rivers.' },
     { img: 'images/varieties/firefly_swarm.jpg', name: 'ヘイケボタル', nameEn: 'Heike Firefly', desc: 'たんぼに すむ ちいさな ホタル。ゲンジより すこし ちいさいよ。', descEn: 'A small firefly in rice paddies. Smaller than Genji.' },
-    { img: 'images/varieties/glowworm.jpg', name: 'ツチボタル', nameEn: 'Glowworm', desc: 'つちの うえで ひかる ホタル。ようちゅうも ひかるんだよ！', descEn: 'Glows on the ground. Even the larvae glow!' },
+    { img: 'images/varieties/glowworm.jpg', name: 'ツチボタル', nameEn: 'Glowing Firefly', desc: 'つちの うえで ひかる ホタル。ようちゅうも ひかるんだよ！', descEn: 'Glows on the ground. Even the larvae glow!' },
   ],
   'かまきり': [
     { img: 'images/varieties/green_mantis.jpg', name: 'オオカマキリ', nameEn: 'Giant Mantis', desc: 'にほんで いちばん おおきい カマキリ。おおきな かまで かりをするよ。', descEn: 'Japan\'s biggest mantis. Hunts with big scythes.' },
