@@ -496,7 +496,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s;
 }
+.overlay-variety-card:active { transform: scale(0.96); }
 .variety-img {
   width: 100%;
   max-width: 160px;
@@ -577,22 +580,34 @@ body {
   background: rgba(0,0,0,0.85);
   z-index: 300;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   cursor: pointer;
   animation: fadeIn 0.2s ease-out;
 }
 
-.image-zoom-overlay img {
+.image-zoom-overlay > img {
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 80vh;
   object-fit: contain;
   border-radius: 16px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   animation: popIn 0.3s ease-out;
 }
 
-/* ===== 画像スワイプドット ===== */
+.image-zoom-overlay .img-swipe-dots {
+  padding: 8px 0;
+}
+.image-zoom-overlay .img-dot {
+  background: rgba(255,255,255,0.4);
+}
+.image-zoom-overlay .img-dot.active {
+  background: #FF9800;
+}
+
+/* ===== 画像スワイプドット＆アニメーション ===== */
 .img-swipe-dots {
   display: flex;
   justify-content: center;
@@ -612,11 +627,11 @@ body {
 }
 
 @keyframes imgSwipeLeft {
-  0% { opacity: 0.5; transform: translateX(20px); }
+  0% { opacity: 0.5; transform: translateX(30px); }
   100% { opacity: 1; transform: translateX(0); }
 }
 @keyframes imgSwipeRight {
-  0% { opacity: 0.5; transform: translateX(-20px); }
+  0% { opacity: 0.5; transform: translateX(-30px); }
   100% { opacity: 1; transform: translateX(0); }
 }
 

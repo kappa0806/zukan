@@ -647,6 +647,69 @@ function openZukanOverlay(titleText, contentBuilder) {
   }
 }
 
+// 画像拡大オーバーレイ（スワイプで画像切り替え対応）
+function openImageZoom(images, startIdx) {
+  let currentIdx = startIdx;
+  const overlay = document.createElement('div');
+  overlay.className = 'image-zoom-overlay';
+
+  const img = document.createElement('img');
+  img.src = images[currentIdx];
+  img.draggable = false;
+  overlay.appendChild(img);
+
+  // ドットインジケーター
+  let dotsDiv = null;
+  if (images.length > 1) {
+    dotsDiv = document.createElement('div');
+    dotsDiv.className = 'img-swipe-dots';
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'img-dot' + (i === currentIdx ? ' active' : '');
+      dotsDiv.appendChild(dot);
+    });
+    overlay.appendChild(dotsDiv);
+  }
+
+  function updateZoomImg() {
+    img.src = images[currentIdx];
+    if (dotsDiv) {
+      dotsDiv.querySelectorAll('.img-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentIdx);
+      });
+    }
+  }
+
+  // スワイプで切り替え
+  let touchStartX = 0, touchStartY = 0;
+  overlay.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  overlay.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (images.length > 1 && Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) {
+        currentIdx = (currentIdx + 1) % images.length;
+      } else {
+        currentIdx = (currentIdx - 1 + images.length) % images.length;
+      }
+      img.style.animation = 'none';
+      img.offsetHeight;
+      img.style.animation = dx < 0 ? 'imgSwipeLeft 0.25s ease' : 'imgSwipeRight 0.25s ease';
+      updateZoomImg();
+      return;
+    }
+    // スワイプでなければタップで閉じる
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      overlay.remove();
+    }
+  });
+
+  document.body.appendChild(overlay);
+}
+
 let zukanNavigating = false;
 let zukanCurrentItem = null;
 let zukanFilteredItems = [];
@@ -722,66 +785,15 @@ function showZukanDetail(item, animDir) {
       ${triviaText ? `<div class="zukan-trivia"><span class="zukan-trivia-label">${t('まめちしき', 'Fun Fact')}</span>${triviaText}</div>` : ''}
     </div>
   `;
-  // 品種画像スワイプ機能
+  // 拡大表示（スワイプで品種画像切り替え対応）
   const detailImg = main.querySelector('.zukan-detail-img');
   const varietyImgs = hasVarieties
     ? [item.img, ...varieties.filter(v => v.img).map(v => v.img)]
     : [item.img];
-  let currentImgIdx = 0;
-
-  function updateDetailImg() {
-    detailImg.src = varietyImgs[currentImgIdx];
-    // ドットインジケーター更新
-    const dots = main.querySelector('.img-swipe-dots');
-    if (dots) {
-      dots.querySelectorAll('.img-dot').forEach((d, i) => {
-        d.classList.toggle('active', i === currentImgIdx);
-      });
-    }
-  }
 
   detailImg.addEventListener('click', function() {
-    const overlay = document.createElement('div');
-    overlay.className = 'image-zoom-overlay';
-    overlay.innerHTML = `<img src="${varietyImgs[currentImgIdx]}" alt="${itemName(item)}" draggable="false">`;
-    overlay.addEventListener('click', () => overlay.remove());
-    document.body.appendChild(overlay);
+    openImageZoom(varietyImgs, 0);
   });
-
-  // 画像上のスワイプで品種画像を切り替え
-  if (varietyImgs.length > 1) {
-    let imgTouchStartX = 0, imgTouchStartY = 0;
-    detailImg.addEventListener('touchstart', (e) => {
-      imgTouchStartX = e.touches[0].clientX;
-      imgTouchStartY = e.touches[0].clientY;
-    }, { passive: true });
-    detailImg.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].clientX - imgTouchStartX;
-      const dy = e.changedTouches[0].clientY - imgTouchStartY;
-      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-      e.stopPropagation(); // 動物ナビのスワイプを止める
-      if (dx < 0) {
-        currentImgIdx = (currentImgIdx + 1) % varietyImgs.length;
-      } else {
-        currentImgIdx = (currentImgIdx - 1 + varietyImgs.length) % varietyImgs.length;
-      }
-      detailImg.style.animation = 'none';
-      detailImg.offsetHeight; // reflow
-      detailImg.style.animation = dx < 0 ? 'imgSwipeLeft 0.25s ease' : 'imgSwipeRight 0.25s ease';
-      updateDetailImg();
-    });
-
-    // ドットインジケーター
-    const dotsDiv = document.createElement('div');
-    dotsDiv.className = 'img-swipe-dots';
-    varietyImgs.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.className = 'img-dot' + (i === 0 ? ' active' : '');
-      dotsDiv.appendChild(dot);
-    });
-    // 画像の後に挿入
-    detailImg.parentNode.insertBefore(dotsDiv, detailImg.nextSibling);
-  }
 
   container.appendChild(main);
 
@@ -823,14 +835,14 @@ function showZukanDetail(item, animDir) {
             const vName = (getLang() === 'en' && v.nameEn) ? v.nameEn : v.name;
             const vDesc = (getLang() === 'en' && v.descEn) ? v.descEn : v.desc;
             card.innerHTML = `${v.img ? `<img src="${v.img}" alt="${vName}" draggable="false" class="variety-img">` : ''}<div class="overlay-variety-name">${vName}</div><div class="overlay-variety-desc">${vDesc}</div>`;
+            // カード全体をタップで画像拡大（スワイプ切り替え付き）
             if (v.img) {
-              card.querySelector('.variety-img').addEventListener('click', (e) => {
+              const allVarImgs = varieties.filter(vv => vv.img).map(vv => vv.img);
+              const imgIdx = allVarImgs.indexOf(v.img);
+              card.style.cursor = 'pointer';
+              card.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const zoom = document.createElement('div');
-                zoom.className = 'image-zoom-overlay';
-                zoom.innerHTML = `<img src="${v.img}" alt="${vName}" draggable="false">`;
-                zoom.addEventListener('click', () => zoom.remove());
-                document.body.appendChild(zoom);
+                openImageZoom(allVarImgs, imgIdx >= 0 ? imgIdx : 0);
               });
             }
             grid.appendChild(card);
