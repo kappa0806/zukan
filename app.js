@@ -540,6 +540,30 @@ function openZukanOverlay(titleText, contentBuilder) {
 }
 
 let zukanNavigating = false;
+let zukanCurrentItem = null;
+let zukanFilteredItems = [];
+
+// スワイプナビ（1回だけ登録）
+(function initSwipe() {
+  const container = document.getElementById('zukan-content');
+  let touchStartX = 0, touchStartY = 0;
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  container.addEventListener('touchend', (e) => {
+    if (!zukanCurrentItem || zukanNavigating) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
+    const idx = zukanFilteredItems.findIndex(c => c.name === zukanCurrentItem.name);
+    if (dx < 0 && idx < zukanFilteredItems.length - 1) {
+      showZukanDetail(zukanFilteredItems[idx + 1], 'right');
+    } else if (dx > 0 && idx > 0) {
+      showZukanDetail(zukanFilteredItems[idx - 1], 'left');
+    }
+  }, { passive: true });
+})();
 
 function showZukanDetail(item, animDir) {
   if (zukanNavigating) return;
@@ -560,6 +584,10 @@ function showZukanDetail(item, animDir) {
   const allFiltered = [];
   filteredCats.forEach(cat => allFiltered.push(...CREATURES[cat]));
   const currentIdx = allFiltered.findIndex(c => c.name === item.name);
+
+  // スワイプ用の状態更新
+  zukanCurrentItem = item;
+  zukanFilteredItems = allFiltered;
 
   let catNameStr = '', sameCatKey = '', sameCatItems = [];
   for (const cat of CATEGORIES) {
@@ -686,23 +714,6 @@ function showZukanDetail(item, animDir) {
   }
 
   container.appendChild(actions);
-
-  // スワイプナビ
-  let touchStartX = 0, touchStartY = 0;
-  container.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-  container.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
-    if (dx < 0 && currentIdx < allFiltered.length - 1) {
-      showZukanDetail(allFiltered[currentIdx + 1], 'right');
-    } else if (dx > 0 && currentIdx > 0) {
-      showZukanDetail(allFiltered[currentIdx - 1], 'left');
-    }
-  }, { passive: true });
 
   // 前後ナビ
   if (allFiltered.length > 1) {
