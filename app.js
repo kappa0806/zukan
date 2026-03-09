@@ -722,13 +722,67 @@ function showZukanDetail(item, animDir) {
       ${triviaText ? `<div class="zukan-trivia"><span class="zukan-trivia-label">${t('まめちしき', 'Fun Fact')}</span>${triviaText}</div>` : ''}
     </div>
   `;
-  main.querySelector('.zukan-detail-img').addEventListener('click', function() {
+  // 品種画像スワイプ機能
+  const detailImg = main.querySelector('.zukan-detail-img');
+  const varietyImgs = hasVarieties
+    ? [item.img, ...varieties.filter(v => v.img).map(v => v.img)]
+    : [item.img];
+  let currentImgIdx = 0;
+
+  function updateDetailImg() {
+    detailImg.src = varietyImgs[currentImgIdx];
+    // ドットインジケーター更新
+    const dots = main.querySelector('.img-swipe-dots');
+    if (dots) {
+      dots.querySelectorAll('.img-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentImgIdx);
+      });
+    }
+  }
+
+  detailImg.addEventListener('click', function() {
     const overlay = document.createElement('div');
     overlay.className = 'image-zoom-overlay';
-    overlay.innerHTML = `<img src="${item.img}" alt="${itemName(item)}" draggable="false">`;
+    overlay.innerHTML = `<img src="${varietyImgs[currentImgIdx]}" alt="${itemName(item)}" draggable="false">`;
     overlay.addEventListener('click', () => overlay.remove());
     document.body.appendChild(overlay);
   });
+
+  // 画像上のスワイプで品種画像を切り替え
+  if (varietyImgs.length > 1) {
+    let imgTouchStartX = 0, imgTouchStartY = 0;
+    detailImg.addEventListener('touchstart', (e) => {
+      imgTouchStartX = e.touches[0].clientX;
+      imgTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    detailImg.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - imgTouchStartX;
+      const dy = e.changedTouches[0].clientY - imgTouchStartY;
+      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+      e.stopPropagation(); // 動物ナビのスワイプを止める
+      if (dx < 0) {
+        currentImgIdx = (currentImgIdx + 1) % varietyImgs.length;
+      } else {
+        currentImgIdx = (currentImgIdx - 1 + varietyImgs.length) % varietyImgs.length;
+      }
+      detailImg.style.animation = 'none';
+      detailImg.offsetHeight; // reflow
+      detailImg.style.animation = dx < 0 ? 'imgSwipeLeft 0.25s ease' : 'imgSwipeRight 0.25s ease';
+      updateDetailImg();
+    });
+
+    // ドットインジケーター
+    const dotsDiv = document.createElement('div');
+    dotsDiv.className = 'img-swipe-dots';
+    varietyImgs.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'img-dot' + (i === 0 ? ' active' : '');
+      dotsDiv.appendChild(dot);
+    });
+    // 画像の後に挿入
+    detailImg.parentNode.insertBefore(dotsDiv, detailImg.nextSibling);
+  }
+
   container.appendChild(main);
 
   // アクションボタン行
@@ -824,53 +878,6 @@ function showZukanDetail(item, animDir) {
     actions.appendChild(infoBtn);
   }
 
-  // なかまボタン
-  const allNakamaCount = CATEGORIES.reduce((sum, cat) => {
-    const items = CREATURES[cat].filter(c => c.name !== item.name);
-    return sum + items.length;
-  }, 0);
-  if (allNakamaCount > 0) {
-    const nakamaBtn = document.createElement('button');
-    nakamaBtn.className = 'zukan-action-btn nakama';
-    nakamaBtn.textContent = getLang() === 'en'
-      ? `Index (${allNakamaCount})`
-      : `もくじ (${allNakamaCount})`;
-    nakamaBtn.addEventListener('click', () => {
-      const title = getLang() === 'en' ? 'Index' : 'もくじ';
-      openZukanOverlay(title, (body) => {
-        let totalDelay = 0;
-        CATEGORIES.forEach(cat => {
-          const friends = CREATURES[cat].filter(c => c.name !== item.name);
-          if (friends.length === 0) return;
-          const section = document.createElement('div');
-          section.className = 'overlay-nakama-section';
-          const heading = document.createElement('div');
-          heading.className = 'overlay-nakama-heading';
-          heading.textContent = catName(cat);
-          if (cat === sameCatKey) heading.classList.add('current-cat');
-          section.appendChild(heading);
-          const grid = document.createElement('div');
-          grid.className = 'overlay-nakama-grid';
-          friends.forEach((ni) => {
-            const card = document.createElement('button');
-            card.className = 'overlay-nakama-item zukan-anim-pop';
-            card.style.animationDelay = `${totalDelay * 30}ms`;
-            totalDelay++;
-            card.innerHTML = `<img src="${ni.img}" alt="${itemName(ni)}" draggable="false"><span>${itemName(ni)}</span>`;
-            card.addEventListener('click', () => {
-              document.querySelector('.zukan-overlay')?.remove();
-              showZukanDetail(ni);
-            });
-            grid.appendChild(card);
-          });
-          section.appendChild(grid);
-          body.appendChild(section);
-        });
-      });
-    });
-    actions.appendChild(nakamaBtn);
-  }
-
   container.appendChild(actions);
 
   // 前後ナビ
@@ -926,20 +933,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== PWA インストール =====
 let deferredPrompt = null;
 const installBtn = document.getElementById('install-btn');
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+if (isIOS && !isStandalone) {
+  // iOS: ホーム画面に追加の案内を表示
   installBtn.style.display = '';
-});
+  installBtn.textContent = t('ホームに追加', 'Add to Home');
+  installBtn.addEventListener('click', () => {
+    const msg = t(
+      'ブラウザの共有ボタン（□↑）をタップして\n「ホーム画面に追加」を選んでね！',
+      'Tap the Share button (□↑) and\nselect "Add to Home Screen"!'
+    );
+    alert(msg);
+  });
+} else {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = '';
+  });
 
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  installBtn.style.display = 'none';
-});
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+  });
+}
 
 window.addEventListener('appinstalled', () => {
   installBtn.style.display = 'none';
