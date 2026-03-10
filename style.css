@@ -76,19 +76,15 @@ body {
 .lang-btn:active { transform: scale(0.95); }
 
 .help-btn {
-  width: 30px;
-  height: 30px;
+  padding: 4px 12px;
   border: 2px solid #FF9800;
-  border-radius: 50%;
+  border-radius: 14px;
   background: white;
   font-family: inherit;
-  font-size: 0.9em;
+  font-size: 0.85em;
   font-weight: bold;
   color: #FF9800;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .help-btn:active { transform: scale(0.95); }
 
