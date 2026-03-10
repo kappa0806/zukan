@@ -1022,6 +1022,49 @@ function showZukanDetail(item, animDir) {
   container.appendChild(actions);
 }
 
+// ===== ヘルプ =====
+function showHelp() {
+  const lang = getLang();
+  const ja = lang === 'ja';
+  const overlay = document.createElement('div');
+  overlay.className = 'help-overlay';
+  overlay.innerHTML = `
+    <div class="help-panel">
+      <div class="help-header">
+        <div class="help-title">${ja ? 'つかいかた' : 'How to Use'}</div>
+        <button class="help-close">&times;</button>
+      </div>
+      <div class="help-body">
+        <div class="help-section">
+          <div class="help-section-title">${ja ? 'いちらん がめん' : 'List Screen'}</div>
+          <div class="help-item"><span class="help-icon">👆</span><span>${ja ? 'どうぶつを タップすると くわしく みられるよ' : 'Tap an animal to see details'}</span></div>
+          <div class="help-item"><span class="help-icon">🏷</span><span>${ja ? 'うえの タブで「どうぶつ」「むし」「うみ」「のりもの」を きりかえるよ' : 'Use tabs to switch categories'}</span></div>
+        </div>
+        <div class="help-section">
+          <div class="help-section-title">${ja ? 'くわしく がめん' : 'Detail Screen'}</div>
+          <div class="help-item"><span class="help-icon">🖼</span><span>${ja ? 'しゃしんを タップすると おおきく なるよ' : 'Tap the photo to zoom in'}</span></div>
+          <div class="help-item"><span class="help-icon">👈👉</span><span>${ja ? 'おおきい しゃしんを よこに スワイプすると つぎの しゃしんに なるよ' : 'Swipe left/right on zoomed photo to see next'}</span></div>
+          <div class="help-item"><span class="help-icon">🔶</span><span>${ja ? '「しゅるい」ボタンで いろんな しゅるいが みられるよ' : 'Tap "Varieties" to see different types'}</span></div>
+          <div class="help-item"><span class="help-icon">🌍</span><span>${ja ? '「すんでるばしょ」で ちずが みられるよ' : 'Tap "Habitat" to see a world map'}</span></div>
+          <div class="help-item"><span class="help-icon">🐾</span><span>${ja ? '「なかま」で にている どうぶつが みられるよ' : 'Tap "Friends" to see similar animals'}</span></div>
+          <div class="help-item"><span class="help-icon">◀▶</span><span>${ja ? '「まえ」「つぎ」で べつの どうぶつに いけるよ' : 'Use Prev/Next to go to another animal'}</span></div>
+        </div>
+        <div class="help-section">
+          <div class="help-section-title">${ja ? 'そのほか' : 'Other'}</div>
+          <div class="help-item"><span class="help-icon">🌐</span><span>${ja ? '「EN」ボタンで えいごに きりかえるよ' : 'Tap "JA" to switch to Japanese'}</span></div>
+          <div class="help-item"><span class="help-icon">📲</span><span>${ja ? 'インストールすると オフラインでも つかえるよ' : 'Install the app to use it offline'}</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.closest('.help-close')) {
+      overlay.remove();
+    }
+  });
+  document.body.appendChild(overlay);
+}
+
 // ===== 言語切替 =====
 function applyLanguage() {
   const lang = getLang();
@@ -1043,6 +1086,7 @@ function toggleLang() {
 document.addEventListener('DOMContentLoaded', () => {
   applyLanguage();
   document.getElementById('lang-toggle').addEventListener('click', toggleLang);
+  document.getElementById('help-btn').addEventListener('click', showHelp);
   showZukanList();
 });
 
