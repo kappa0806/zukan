@@ -608,6 +608,135 @@ body {
   100% { opacity: 1; transform: translateX(0); }
 }
 
+/* ===== タブレット対応 ===== */
+@media (min-width: 768px) {
+  #zukan-app {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 24px;
+  }
+
+  .header-title {
+    font-size: 1.6em;
+  }
+
+  .zukan-tab {
+    padding: 8px 20px;
+    font-size: 1.1em;
+  }
+
+  .zukan-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .zukan-item {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 16px;
+  }
+
+  .zukan-detail-img {
+    width: 280px;
+    height: 280px;
+  }
+
+  .zukan-detail-name {
+    font-size: 2.2em;
+  }
+
+  .zukan-detail-desc {
+    font-size: 1.15em;
+    line-height: 1.6;
+  }
+
+  .zukan-trivia {
+    font-size: 1.05em;
+    padding: 10px 14px;
+  }
+
+  .zukan-habitat {
+    padding: 10px 14px;
+  }
+
+  .zukan-habitat svg {
+    max-width: 450px;
+  }
+
+  .zukan-action-btn {
+    padding: 12px 22px;
+    font-size: 1.1em;
+  }
+
+  .zukan-action-btn.back {
+    padding: 8px 16px;
+    font-size: 0.95em;
+  }
+
+  .zukan-overlay-panel {
+    max-width: 800px;
+    max-height: 80vh;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .overlay-variety-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .variety-img {
+    max-width: 200px;
+    height: 130px;
+  }
+
+  .overlay-variety-name {
+    font-size: 1.1em;
+  }
+
+  .overlay-variety-desc {
+    font-size: 1em;
+  }
+
+  .varieties-preview-imgs img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .overlay-nakama-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .overlay-nakama-item img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .overlay-nakama-item {
+    font-size: 0.95em;
+  }
+
+  .install-btn, .lang-btn {
+    padding: 6px 16px;
+    font-size: 0.95em;
+  }
+}
+
+@media (min-width: 1024px) {
+  #zukan-app {
+    max-width: 1100px;
+  }
+
+  .zukan-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+  }
+
+  .zukan-detail-img {
+    width: 320px;
+    height: 320px;
+  }
+}
+
 /* ===== レスポンシブ: 縦向き対応 ===== */
 @media (orientation: portrait) {
   .zukan-detail-main {
