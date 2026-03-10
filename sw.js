@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zukan-pwa-v22';
+const CACHE_NAME = 'zukan-pwa-v23';
 
 // 自身のファイル
 const APP_FILES = [
@@ -19,6 +19,8 @@ const IMAGES = [
   'hippo','tiger','deer','raccoon','wolf','camel','kangaroo','hamster','squirrel',
   'owl','parrot','flamingo','swan','rhino','zebra',
   'snake',
+  'crocodile','red_panda','river_otter','hedgehog','bat','skunk','alpaca',
+  'chameleon','araiguma','mole','weasel','crane_bird','eagle','kingfisher','cockatoo',
   'butterfly','caterpillar','ladybug','ant','grasshopper','beetle','bee','snail',
   'dragonfly','cicada','firefly','stagbeetle','mantis','spider','cricket','pillbug',
   'fish','tropicalfish','pufferfish','shark','octopus','squid','shrimp','whale',
@@ -68,6 +70,21 @@ const VARIETY_IMAGES = [
   'white_rhino','black_rhino','indian_rhino',
   'plains_zebra','grevys_zebra','mountain_zebra',
   'king_cobra','ball_python','green_tree_snake',
+  'nile_crocodile','alligator','gharial',
+  'styan_red_panda','nepal_red_panda',
+  'asian_small_clawed_otter','eurasian_otter','north_american_otter',
+  'four_toed_hedgehog','european_hedgehog','long_eared_hedgehog',
+  'fruit_bat','pipistrelle','horseshoe_bat',
+  'striped_skunk','spotted_skunk','hog_nosed_skunk',
+  'huacaya','suri_alpaca','llama',
+  'panther_chameleon','veiled_chameleon','jackson_chameleon',
+  'common_raccoon','crab_eating_raccoon','coati',
+  'azuma_mole','european_mole','star_nosed_mole',
+  'ferret','ermine','japanese_weasel',
+  'red_crowned_crane','hooded_crane','demoiselle_crane',
+  'golden_eagle','bald_eagle','stellers_sea_eagle',
+  'common_kingfisher','crested_kingfisher','ruddy_kingfisher',
+  'sulphur_crested_cockatoo','galah','major_mitchell_cockatoo',
   'tuna','sea_bream','salmon',
   'clownfish','angelfish','tang_fish',
   'tiger_puffer','porcupinefish','boxfish',
